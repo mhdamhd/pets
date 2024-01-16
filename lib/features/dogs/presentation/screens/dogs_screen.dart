@@ -55,6 +55,7 @@ class _DogsScreenState extends ConsumerState<DogsScreen> {
           ? const AppLoading()
           : state.hasData
           ? SmartRefresher(
+          physics: const BouncingScrollPhysics(),
           controller: notifier.refreshController,
           enablePullDown: true,
           enablePullUp: state.state != DogsConcreteState.fetchedAllDogs,

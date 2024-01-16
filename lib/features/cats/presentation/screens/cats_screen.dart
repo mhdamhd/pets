@@ -66,6 +66,7 @@ class _CatsScreenState extends ConsumerState<CatsScreen> {
               crossAxisSpacing: 8.0,
               mainAxisSpacing: 8.0,
             ),
+            physics: const BouncingScrollPhysics(),
             children: state.catList.map((cat) => CatCard(cat: cat)).toList(),
           ))
           : Center(
