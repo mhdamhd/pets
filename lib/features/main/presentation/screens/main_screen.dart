@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:pets/features/cats/presentation/screens/cats_screen.dart';
+import 'package:pets/features/dogs/presentation/screens/dogs_screen.dart';
 
 @RoutePage()
 class MainScreen extends StatefulWidget {
@@ -26,8 +28,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   final List<Widget> _screens = const [
-    Center(child: Text("Screen 1"),),
-    Center(child: Text("Screen 2"),),
+    DogsScreen(),
+    CatsScreen(),
   ];
 
   @override
@@ -43,8 +45,8 @@ class _MainScreenState extends State<MainScreen> {
           _index = index;
         }),
         items: const [
-          BottomNavigationBarItem(label: "First", icon: Icon(Icons.favorite)),
-          BottomNavigationBarItem(label: "Second", icon: Icon(Icons.heart_broken)),
+          BottomNavigationBarItem(label: "Dogs", icon: Icon(Icons.favorite)),
+          BottomNavigationBarItem(label: "Cats", icon: Icon(Icons.heart_broken)),
         ],
       ),
     );
