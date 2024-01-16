@@ -20,10 +20,11 @@ class DogsNotifier extends StateNotifier<DogsState> {
       state = state.copyWith(
         state: DogsConcreteState.loading,
         isLoading: true,
+        oneItem: !state.oneItem
       );
 
       final response = await dogsRepository.fetchDogs(
-          skip: 0, );
+          limit: state.oneItem ? 1 : ELEMENTS_PER_PAGE );
 
       updateStateFromResponse(response);
   }
@@ -39,7 +40,7 @@ class DogsNotifier extends StateNotifier<DogsState> {
     }, (data) {
       final dogList = data;
 
-      final List<DogEntity> totalDogs = [...state.dogList, ...dogList];
+      final List<DogEntity> totalDogs = data;
 
       state = state.copyWith(
         dogList: totalDogs,

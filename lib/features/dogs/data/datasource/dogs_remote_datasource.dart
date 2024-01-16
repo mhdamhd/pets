@@ -5,7 +5,7 @@ import 'package:pets/shared/globals.dart';
 
 abstract class DogsDatasource {
   Future<List<DogModel>> fetchPaginatedDogs(
-      {required int skip});
+      {required int limit});
 }
 
 class DogsRemoteDatasource extends DogsDatasource {
@@ -14,12 +14,12 @@ class DogsRemoteDatasource extends DogsDatasource {
 
   @override
   Future<List<DogModel>> fetchPaginatedDogs(
-      {required int skip}) async {
+      {required int limit}) async {
     final response = await networkService.get(
       'https://api.thedogapi.com/v1/images/search',
       queryParameters: {
-        'page': skip,
-        'limit': ELEMENTS_PER_PAGE,
+        'page': 0,
+        'limit': limit,
         'has_breeds' : 'true',
         'order' : 'RANDOM',
       },

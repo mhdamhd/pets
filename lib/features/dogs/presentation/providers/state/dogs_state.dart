@@ -15,12 +15,14 @@ class DogsState extends Equatable {
   final DogsConcreteState state;
   final String message;
   final bool isLoading;
+  final bool oneItem;
   const DogsState({
     this.dogList = const [],
     this.isLoading = false,
     this.hasData = false,
     this.state = DogsConcreteState.initial,
     this.message = '',
+    this.oneItem = false,
   });
 
   const DogsState.initial({
@@ -29,6 +31,7 @@ class DogsState extends Equatable {
     this.hasData = false,
     this.state = DogsConcreteState.initial,
     this.message = '',
+    this.oneItem = false
   });
 
   DogsState copyWith({
@@ -38,6 +41,7 @@ class DogsState extends Equatable {
     DogsConcreteState? state,
     String? message,
     bool? isLoading,
+    bool? oneItem,
   }) {
     return DogsState(
       isLoading: isLoading ?? this.isLoading,
@@ -45,6 +49,7 @@ class DogsState extends Equatable {
       hasData: hasData ?? this.hasData,
       state: state ?? this.state,
       message: message ?? this.message,
+      oneItem: oneItem ?? this.oneItem
     );
   }
 
@@ -54,5 +59,5 @@ class DogsState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [dogList, hasData, state, message];
+  List<Object?> get props => [dogList, hasData, state, message, oneItem];
 }

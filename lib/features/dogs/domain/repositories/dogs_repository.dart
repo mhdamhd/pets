@@ -4,5 +4,5 @@ import 'package:pets/shared/exceptions/http_exception.dart';
 
 abstract class DogsRepository {
   Future<Either<AppException, List<DogEntity>>> fetchDogs(
-      {required int skip});
+      {required int limit});
 }

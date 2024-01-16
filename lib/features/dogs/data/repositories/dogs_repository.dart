@@ -10,9 +10,9 @@ class DogsRepositoryImpl extends DogsRepository {
 
   @override
   Future<Either<AppException, List<DogEntity>>> fetchDogs(
-      {required int skip}) async {
+      {required int limit}) async {
     try {
-      final res = await  dogsDatasource.fetchPaginatedDogs(skip: skip);
+      final res = await  dogsDatasource.fetchPaginatedDogs(limit: limit);
       return Right(res.map((e) => e.toEntity()).toList());
     } catch (e, s) {
       return Left(e as AppException);

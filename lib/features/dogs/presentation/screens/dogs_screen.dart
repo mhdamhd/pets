@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pets/features/dogs/presentation/providers/dogs_state_provider.dart';
 import 'package:pets/features/dogs/presentation/providers/state/dogs_state.dart';
 import 'package:pets/features/dogs/presentation/widgets/dog_card.dart';
+import 'package:pets/shared/globals.dart';
 import 'package:pets/shared/widgets/app_loading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -57,6 +58,7 @@ class _DogsScreenState extends ConsumerState<DogsScreen> {
           ? LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 minHeight: viewportConstraints.maxHeight,
@@ -72,7 +74,7 @@ class _DogsScreenState extends ConsumerState<DogsScreen> {
                     Column(
                       children: [ElevatedButton(onPressed: () {
                         notifier.fetchDogs();
-                      }, child: const Text("Refresh"))],
+                      }, child: Text(state.oneItem ? 'Get $ELEMENTS_PER_PAGE Items' : 'Get One Item'))],
                     )
                   ],
                 ),
