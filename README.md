@@ -8,7 +8,6 @@ A Flutter app that uses the "The Dogs Api" and "The Cats Api".
 - Fetch cats
 - Show dogs as a list
 - Show cats as a grid
-- Pagination
 
 ### What is used in this project?
 

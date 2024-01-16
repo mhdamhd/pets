@@ -7,13 +7,10 @@ enum DogsConcreteState {
   loading,
   loaded,
   failure,
-  fetchingMore,
-  fetchedAllDogs
 }
 
 class DogsState extends Equatable {
   final List<DogEntity> dogList;
-  final int page;
   final bool hasData;
   final DogsConcreteState state;
   final String message;
@@ -24,12 +21,10 @@ class DogsState extends Equatable {
     this.hasData = false,
     this.state = DogsConcreteState.initial,
     this.message = '',
-    this.page = 0,
   });
 
   const DogsState.initial({
     this.dogList = const [],
-    this.page = 0,
     this.isLoading = false,
     this.hasData = false,
     this.state = DogsConcreteState.initial,
@@ -47,7 +42,6 @@ class DogsState extends Equatable {
     return DogsState(
       isLoading: isLoading ?? this.isLoading,
       dogList: dogList ?? this.dogList,
-      page: page ?? this.page,
       hasData: hasData ?? this.hasData,
       state: state ?? this.state,
       message: message ?? this.message,
@@ -56,9 +50,9 @@ class DogsState extends Equatable {
 
   @override
   String toString() {
-    return 'DogsState(isLoading:$isLoading, dogLength: ${dogList.length}, page: $page, hasData: $hasData, state: $state, message: $message)';
+    return 'DogsState(isLoading:$isLoading, dogLength: ${dogList.length}, hasData: $hasData, state: $state, message: $message)';
   }
 
   @override
-  List<Object?> get props => [dogList, page, hasData, state, message];
+  List<Object?> get props => [dogList, hasData, state, message];
 }

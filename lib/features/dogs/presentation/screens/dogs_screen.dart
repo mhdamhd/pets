@@ -5,7 +5,6 @@ import 'package:pets/features/dogs/presentation/providers/state/dogs_state.dart'
 import 'package:pets/features/dogs/presentation/widgets/dog_card.dart';
 import 'package:pets/shared/widgets/app_loading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 @RoutePage()
 class DogsScreen extends ConsumerStatefulWidget {
@@ -18,7 +17,6 @@ class DogsScreen extends ConsumerStatefulWidget {
 }
 
 class _DogsScreenState extends ConsumerState<DogsScreen> {
-  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -30,6 +28,8 @@ class _DogsScreenState extends ConsumerState<DogsScreen> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(dogsNotifierProvider);
@@ -39,7 +39,7 @@ class _DogsScreenState extends ConsumerState<DogsScreen> {
       dogsNotifierProvider.select((value) => value),
       ((DogsState? previous, DogsState next) {
         //show Snackbar on failure
-        if (next.state == DogsConcreteState.fetchedAllDogs) {
+        if (next.state == DogsConcreteState.failure) {
           if (next.message.isNotEmpty) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(next.message.toString())));
@@ -54,17 +54,33 @@ class _DogsScreenState extends ConsumerState<DogsScreen> {
       body: state.state == DogsConcreteState.loading
           ? const AppLoading()
           : state.hasData
-          ? SmartRefresher(
-          physics: const BouncingScrollPhysics(),
-          controller: notifier.refreshController,
-          enablePullDown: true,
-          enablePullUp: state.state != DogsConcreteState.fetchedAllDogs,
-          onRefresh: () => notifier.fetchDogs(),
-          onLoading: () => notifier.fetchDogs(),
-          child: ListView(
-            children: state.dogList.map((dog) => DogCard(dog: dog)).toList(),
-          ))
-          : Center(
+          ? LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: viewportConstraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        children: state.dogList.map((dog) => DogCard(dog: dog)).toList(),
+                      ),
+                    ),
+                    Column(
+                      children: [ElevatedButton(onPressed: () {
+                        notifier.fetchDogs();
+                      }, child: const Text("Refresh"))],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ) : Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22.0),
           child: Text(
