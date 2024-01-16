@@ -7,13 +7,10 @@ enum CatsConcreteState {
   loading,
   loaded,
   failure,
-  fetchingMore,
-  fetchedAllCats
 }
 
 class CatsState extends Equatable {
   final List<CatEntity> catList;
-  final int page;
   final bool hasData;
   final CatsConcreteState state;
   final String message;
@@ -24,12 +21,10 @@ class CatsState extends Equatable {
     this.hasData = false,
     this.state = CatsConcreteState.initial,
     this.message = '',
-    this.page = 0,
   });
 
   const CatsState.initial({
     this.catList = const [],
-    this.page = 0,
     this.isLoading = false,
     this.hasData = false,
     this.state = CatsConcreteState.initial,
@@ -38,7 +33,6 @@ class CatsState extends Equatable {
 
   CatsState copyWith({
     List<CatEntity>? catList,
-    int? page,
     bool? hasData,
     CatsConcreteState? state,
     String? message,
@@ -47,7 +41,6 @@ class CatsState extends Equatable {
     return CatsState(
       isLoading: isLoading ?? this.isLoading,
       catList: catList ?? this.catList,
-      page: page ?? this.page,
       hasData: hasData ?? this.hasData,
       state: state ?? this.state,
       message: message ?? this.message,
@@ -56,9 +49,9 @@ class CatsState extends Equatable {
 
   @override
   String toString() {
-    return 'CatsState(isLoading:$isLoading, catLength: ${catList.length}, page: $page, hasData: $hasData, state: $state, message: $message)';
+    return 'CatsState(isLoading:$isLoading, catLength: ${catList.length}, hasData: $hasData, state: $state, message: $message)';
   }
 
   @override
-  List<Object?> get props => [catList, page, hasData, state, message];
+  List<Object?> get props => [catList, hasData, state, message];
 }

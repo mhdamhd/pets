@@ -39,7 +39,7 @@ class _CatsScreenState extends ConsumerState<CatsScreen> {
       catsNotifierProvider.select((value) => value),
       ((CatsState? previous, CatsState next) {
         //show Snackbar on failure
-        if (next.state == CatsConcreteState.fetchedAllCats) {
+        if (next.state == CatsConcreteState.failure) {
           if (next.message.isNotEmpty) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(next.message.toString())));
@@ -57,9 +57,8 @@ class _CatsScreenState extends ConsumerState<CatsScreen> {
           ? SmartRefresher(
           controller: notifier.refreshController,
           enablePullDown: true,
-          enablePullUp: state.state != CatsConcreteState.fetchedAllCats,
+          enablePullUp: false,
           onRefresh: () => notifier.fetchCats(),
-          onLoading: () => notifier.fetchCats(),
           child: GridView(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
